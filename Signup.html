@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artify Studio</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg, #ffe4f0, #ffd6ec);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.container{
+    width:400px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(219, 39, 119, 0.18);
+    border-radius: 28px;
+    padding: 35px;
+    box-shadow: 0 20px 50px rgba(219, 39, 119, 0.15);
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.logo h1{
+    color:#db2777;
+    font-size:34px;
+    letter-spacing: 1px;
+}
+
+.logo p{
+    color:#9d174d;
+    font-size:15px;
+}
+
+h2{
+    text-align:center;
+    margin-bottom:22px;
+    color:#831843;
+}
+
+.input-group{
+    margin-bottom:18px;
+}
+
+.input-group input{
+    width:100%;
+    padding:14px 16px;
+    border:1px solid rgba(219, 39, 119, 0.3);
+    border-radius:14px;
+    outline:none;
+    transition:0.3s;
+    background: #fff;
+    color:#3f3f46;
+}
+
+.input-group input:focus{
+    border-color:#ec4899;
+    box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.12);
+}
+
+.btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    background: linear-gradient(135deg, #ec4899, #db2777);
+    color:white;
+    font-size:16px;
+    border-radius:14px;
+    cursor:pointer;
+    transition:0.3s;
+    box-shadow: 0 12px 24px rgba(219, 39, 119, 0.18);
+}
+
+.btn:hover{
+    transform: translateY(-1px);
+    background: linear-gradient(135deg, #d946ef, #be185d);
+}
+
+.switch{
+    text-align:center;
+    margin-top:18px;
+    color:#7c3aed;
+    font-size:14px;
+}
+
+.switch a{
+    color:#d946ef;
+    text-decoration:none;
+    font-weight:700;
+}
+
+.page{
+    display:none;
+}
+
+.active{
+    display:block;
+}
+
+.home{
+    text-align:center;
+}
+
+.home h1{
+    color:#c026d3;
+    margin-bottom:15px;
+}
+
+.home p{
+    color:#5b21b6;
+    margin-bottom:20px;
+    line-height:1.7;
+}
+
+.logout{
+    background:#f43f5e;
+}
+
+.logout:hover{
+    background:#e11d48;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- LOGIN PAGE -->
+    <div id="loginPage" class="page active">
+        <div class="logo">
+            <h1>Artify Studio</h1>
+            <p>Creative Design Solutions</p>
+        </div>
+
+        <h2>Login</h2>
+
+        <div class="input-group">
+            <input type="email" id="loginEmail" placeholder="Email">
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="loginPassword" placeholder="Password">
+        </div>
+
+        <button class="btn" onclick="login()">Login</button>
+
+        <div class="switch">
+            Don't have an account?
+            <a href="#" onclick="showSignup()">Sign Up</a>
+        </div>
+    </div>
+
+    <!-- SIGNUP PAGE -->
+    <div id="signupPage" class="page">
+
+        <div class="logo">
+            <h1>Artify Studio</h1>
+            <p>Create Your Account</p>
+        </div>
+
+        <h2>Sign Up</h2>
+
+        <div class="input-group">
+            <input type="text" id="signupName" placeholder="Full Name">
+        </div>
+
+        <div class="input-group">
+            <input type="email" id="signupEmail" placeholder="Email">
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="signupPassword" placeholder="Password">
+        </div>
+
+        <button class="btn" onclick="signup()">Create Account</button>
+
+        <div class="switch">
+            Already have an account?
+            <a href="#" onclick="showLogin()">Login</a>
+        </div>
+    </div>
+
+    <!-- HOME PAGE -->
+    <div id="homePage" class="page">
+
+        <div class="home">
+            <h1>Welcome to Artify Studio</h1>
+
+            <p id="welcomeText"></p>
+
+            <p>
+                We transform ideas into stunning digital experiences.
+                Thank you for signing in to Artify Studio.
+            </p>
+
+            <button class="btn logout" onclick="logout()">
+                Logout
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let user = {};
+
+function showSignup(){
+    document.getElementById("loginPage").classList.remove("active");
+    document.getElementById("signupPage").classList.add("active");
+}
+
+function showLogin(){
+    document.getElementById("signupPage").classList.remove("active");
+    document.getElementById("loginPage").classList.add("active");
+}
+
+function signup(){
+
+    const name = document.getElementById("signupName").value;
+    const email = document.getElementById("signupEmail").value;
+    const password = document.getElementById("signupPassword").value;
+
+    if(name === "" || email === "" || password === ""){
+        alert("Please fill all fields");
+        return;
+    }
+
+    user = {
+        name,
+        email,
+        password
+    };
+
+    alert("Account Created Successfully!");
+    showLogin();
+}
+
+function login(){
+
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+
+    if(email === user.email && password === user.password){
+
+        document.getElementById("loginPage").classList.remove("active");
+
+        document.getElementById("welcomeText").innerHTML =
+        "Hello, <strong>" + user.name + "</strong>";
+
+        document.getElementById("homePage").classList.add("active");
+
+    } else {
+        alert("Invalid Email or Password");
+    }
+}
+
+function logout(){
+
+    document.getElementById("homePage").classList.remove("active");
+    document.getElementById("loginPage").classList.add("active");
+
+}
+
+</script>
+
+</body>
+</html>
